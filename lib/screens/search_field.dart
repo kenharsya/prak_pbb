@@ -10,13 +10,13 @@ class SearchField extends StatelessWidget {
     return TextField(
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: 'Cari part motor, brand, atau kategori...',
-        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+        hintText: 'Cari judul, penulis, atau genre...',
+        prefixIcon: const Icon(Icons.search, color: Colors.teal),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
         ),
       ),

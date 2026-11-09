@@ -1,68 +1,104 @@
 import 'dart:async';
-import '../models/product.dart';
+import '../models/novel.dart';
 
 class ApiService {
-  final List<Product> _mockParts = [
-    Product(
-      id: 1,
-      title: 'Knalpot Racing Full System',
-      brand: 'Akrapovic',
-      description: 'Knalpot berbahan stainless steel anti karat dengan karakter suara bulat bass.',
-      price: 120.00,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCU447V-JqyWPvznIYi8u1OanMqPNuTqz8PeYmPFRJ9g&s=10',
-      category: 'Knalpot & Performa',
+  final List<Novel> _novels = [
+    Novel(
+      id: '1',
+      title: 'Laskar Pelangi',
+      author: 'Andrea Hirata',
+      genre: 'Drama / Edukasi',
+      description: 'Kisah 10 anak dari keluarga miskin di Belitung yang berjuang menuntut ilmu di sekolah Muhammadiyah.',
+      price: 85000,
+      coverUrl: 'https://picsum.photos/seed/novel1/500/500',
     ),
-    Product(
-      id: 2,
-      title: 'Master Rem Tabung Terpisah',
-      brand: 'Brembo',
-      description: 'Master rem pengereman lebih pakem dan responsif. Cocok untuk penggunaan harian maupun balap.',
-      price: 85.50,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQio1fLCqoLehlH8s10F71zAVMgANf4wd0KYX27lPLzHA&s=10',
-      category: 'Sistem Pengereman',
+    Novel(
+      id: '2',
+      title: 'Bumi Manusia',
+      author: 'Pramoedya Ananta Toer',
+      genre: 'Fiksi Sejarah',
+      description: 'Kisah perjuangan Minke di era kolonial Belanda dalam mempertahankan hak dan cintanya.',
+      price: 115000,
+      coverUrl: 'https://picsum.photos/seed/novel2/500/500',
     ),
-    Product(
-      id: 3,
-      title: 'Shockbreaker Tabung Atas 330mm',
-      brand: 'YSS',
-      description: 'Suspensi empuk dengan fitur setelan preload yang bisa disesuaikan dengan beban berkendara.',
-      price: 95.00,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsZpZLwD3RngAwILcs512AxAH1D3R4L7WZx5V9o9xhlQ&s=10',
-      category: 'Suspensi',
+    Novel(
+      id: '3',
+      title: 'Hujan',
+      author: 'Tere Liye',
+      genre: 'Sci-Fi / Romantis',
+      description: 'Menceritakan tentang persahabatan, cinta, dan kepasrahan di dunia masa depan pasca bencana dahsyat.',
+      price: 90000,
+      coverUrl: 'https://picsum.photos/seed/novel3/500/500',
     ),
-    Product(
-      id: 4,
-      title: 'Kaliper Rem 4 Piston',
-      brand: 'RCB',
-      description: 'Kaliper rem berbahan alumunium CNC presisi tinggi untuk daya cengkeram rem maksimal.',
-      price: 65.00,
-      thumbnail: 'https://www.hondacengkareng.com/wp-content/uploads/2018/08/Caliper-Sub-Assy-L-FR-45150KZZ902-600x600.jpg',
-      category: 'Sistem Pengereman',
+    Novel(
+      id: '4',
+      title: 'Cantik Itu Luka',
+      author: 'Eka Kurniawan',
+      genre: 'Realisme Magis',
+      description: 'Perpaduan antara sejarah kolonialisme, tragedi keluarga, dan elemen realisme magis khas Indonesia.',
+      price: 110000,
+      coverUrl: 'https://picsum.photos/seed/novel4/500/500',
     ),
-    Product(
-      id: 5,
-      title: 'Velg Racing Palang 5',
-      brand: 'Vrossi',
-      description: 'Velg racing alumunium alloy yang ringan dan kuat. Meningkatkan kestabilan saat manuver.',
-      price: 110.00,
-      thumbnail: 'https://hsrwheel.com/wp-content/uploads/2025/08/BOROKO-TJH-HSR-R16X7-H5X1143-ET42-SANDY-BRONZE-KANAN.jpg',
-      category: 'Kaki-kaki & Roda',
+    Novel(
+      id: '5',
+      title: 'Perahu Kertas',
+      author: 'Dee Lestari',
+      genre: 'Romantis / Remaja',
+      description: 'Kisah persahabatan dan pencarian jati diri antara Kugy yang unik dan Keenan yang bercita-cita menjadi pelukis.',
+      price: 88000,
+      coverUrl: 'https://picsum.photos/seed/novel5/500/500',
+    ),
+    Novel(
+      id: '6',
+      title: 'Laut Bercerita',
+      author: 'Leila S. Chudori',
+      genre: 'Fiksi Sejarah',
+      description: 'Mengangkat kisah penangkapan dan penghilangan paksa aktivis mahasiswa di era Orde Baru.',
+      price: 105000,
+      coverUrl: 'https://picsum.photos/seed/novel6/500/500',
     ),
   ];
 
-  Future<List<Product>> getProducts() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return _mockParts;
+  // READ (Get All)
+  Future<List<Novel>> getNovels() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return List.from(_novels);
   }
 
-  Future<List<Product>> searchProducts(String query) async {
+  // CREATE (Add New)
+  Future<bool> addNovel(Novel novel) async {
     await Future.delayed(const Duration(milliseconds: 300));
-    if (query.isEmpty) return _mockParts;
-    final lowerQuery = query.toLowerCase();
-    return _mockParts.where((part) {
-      return part.title.toLowerCase().contains(lowerQuery) ||
-             part.category.toLowerCase().contains(lowerQuery) ||
-             part.brand.toLowerCase().contains(lowerQuery);
+    _novels.add(novel);
+    return true;
+  }
+
+  // UPDATE (Edit Existing)
+  Future<bool> updateNovel(Novel novel) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    final index = _novels.indexWhere((n) => n.id == novel.id);
+    if (index != -1) {
+      _novels[index] = novel;
+      return true;
+    }
+    return false;
+  }
+
+  // DELETE (Remove)
+  Future<bool> deleteNovel(String id) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    _novels.removeWhere((n) => n.id == id);
+    return true;
+  }
+
+  // SEARCH
+  Future<List<Novel>> searchNovels(String query) async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    if (query.isEmpty) return List.from(_novels);
+    final q = query.toLowerCase();
+    return _novels.where((n) {
+      return n.title.toLowerCase().contains(q) ||
+          n.author.toLowerCase().contains(q) ||
+          n.genre.toLowerCase().contains(q);
     }).toList();
   }
 }
