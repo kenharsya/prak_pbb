@@ -1,68 +1,64 @@
-import 'dart:async';
+import 'dart:convert';
+
 import '../models/product.dart';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:http/http.dart' as http;
+
 class ApiService {
-  final List<Product> _mockParts = [
-    Product(
-      id: 1,
-      title: 'Knalpot Racing Full System',
-      brand: 'Akrapovic',
-      description: 'Knalpot berbahan stainless steel anti karat dengan karakter suara bulat bass.',
-      price: 120.00,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCU447V-JqyWPvznIYi8u1OanMqPNuTqz8PeYmPFRJ9g&s=10',
-      category: 'Knalpot & Performa',
-    ),
-    Product(
-      id: 2,
-      title: 'Master Rem Tabung Terpisah',
-      brand: 'Brembo',
-      description: 'Master rem pengereman lebih pakem dan responsif. Cocok untuk penggunaan harian maupun balap.',
-      price: 85.50,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQio1fLCqoLehlH8s10F71zAVMgANf4wd0KYX27lPLzHA&s=10',
-      category: 'Sistem Pengereman',
-    ),
-    Product(
-      id: 3,
-      title: 'Shockbreaker Tabung Atas 330mm',
-      brand: 'YSS',
-      description: 'Suspensi empuk dengan fitur setelan preload yang bisa disesuaikan dengan beban berkendara.',
-      price: 95.00,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsZpZLwD3RngAwILcs512AxAH1D3R4L7WZx5V9o9xhlQ&s=10',
-      category: 'Suspensi',
-    ),
-    Product(
-      id: 4,
-      title: 'Kaliper Rem 4 Piston',
-      brand: 'RCB',
-      description: 'Kaliper rem berbahan alumunium CNC presisi tinggi untuk daya cengkeram rem maksimal.',
-      price: 65.00,
-      thumbnail: 'https://www.hondacengkareng.com/wp-content/uploads/2018/08/Caliper-Sub-Assy-L-FR-45150KZZ902-600x600.jpg',
-      category: 'Sistem Pengereman',
-    ),
-    Product(
-      id: 5,
-      title: 'Velg Racing Palang 5',
-      brand: 'Vrossi',
-      description: 'Velg racing alumunium alloy yang ringan dan kuat. Meningkatkan kestabilan saat manuver.',
-      price: 110.00,
-      thumbnail: 'https://hsrwheel.com/wp-content/uploads/2025/08/BOROKO-TJH-HSR-R16X7-H5X1143-ET42-SANDY-BRONZE-KANAN.jpg',
-      category: 'Kaki-kaki & Roda',
-    ),
-  ];
+  // - Web (Chrome): pakai localhost langsung
+  // - Emulator Android: 10.0.2.2 = localhost komputer
+  // - Perangkat fisik Android: ganti dengan IP LAN komputer, mis. 192.168.1.10
+  static const String _host = kIsWeb ? 'localhost' : '10.0.2.2';
+  static const String baseUrl = 'http://$_host:3000/products';
 
   Future<List<Product>> getProducts() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return _mockParts;
+    final res = await http.get(Uri.parse(baseUrl));
+    if (res.statusCode != 200) {
+      throw Exception('Gagal memuat produk (${res.statusCode})');
+    }
+    final List data = jsonDecode(res.body) as List;
+    return data.map((e) => Product.fromJson(e)).toList();
   }
 
   Future<List<Product>> searchProducts(String query) async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    if (query.isEmpty) return _mockParts;
-    final lowerQuery = query.toLowerCase();
-    return _mockParts.where((part) {
-      return part.title.toLowerCase().contains(lowerQuery) ||
-             part.category.toLowerCase().contains(lowerQuery) ||
-             part.brand.toLowerCase().contains(lowerQuery);
-    }).toList();
+    final uri = Uri.parse(baseUrl).replace(queryParameters: {'q': query});
+    final res = await http.get(uri);
+    if (res.statusCode != 200) {
+      throw Exception('Gagal mencari produk (${res.statusCode})');
+    }
+    final List data = jsonDecode(res.body) as List;
+    return data.map((e) => Product.fromJson(e)).toList();
+  }
+
+  Future<Product> createProduct(Product product) async {
+    final res = await http.post(
+      Uri.parse(baseUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(product.toJson()),
+    );
+    if (res.statusCode != 201) {
+      throw Exception('Gagal menambah produk (${res.statusCode})');
+    }
+    return Product.fromJson(jsonDecode(res.body));
+  }
+
+  Future<Product> updateProduct(Product product) async {
+    final res = await http.put(
+      Uri.parse('$baseUrl/${product.id}'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(product.toJson()),
+    );
+    if (res.statusCode != 200) {
+      throw Exception('Gagal mengubah produk (${res.statusCode})');
+    }
+    return Product.fromJson(jsonDecode(res.body));
+  }
+
+  Future<void> deleteProduct(int id) async {
+    final res = await http.delete(Uri.parse('$baseUrl/$id'));
+    if (res.statusCode != 200) {
+      throw Exception('Gagal menghapus produk (${res.statusCode})');
+    }
   }
 }

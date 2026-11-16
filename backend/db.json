@@ -1,0 +1,50 @@
+{
+  "nextId": 7,
+  "products": [
+    {
+      "id": 1,
+      "title": "Knalpot Racing Full System",
+      "brand": "Akrapovic",
+      "description": "Knalpot berbahan stainless steel anti karat dengan karakter suara bulat bass.",
+      "price": 120,
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCU447V-JqyWPvznIYi8u1OanMqPNuTqz8PeYmPFRJ9g&s=10",
+      "category": "Knalpot & Performa"
+    },
+    {
+      "id": 2,
+      "title": "Master Rem Tabung Terpisah",
+      "brand": "Brembo",
+      "description": "Master rem pengereman lebih pakem dan responsif. Cocok untuk penggunaan harian maupun balap.",
+      "price": 85.5,
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQio1fLCqoLehlH8s10F71zAVMgANf4wd0KYX27lPLzHA&s=10",
+      "category": "Sistem Pengereman"
+    },
+    {
+      "id": 3,
+      "title": "Shockbreaker Tabung Atas 330mm",
+      "brand": "YSS",
+      "description": "Suspensi empuk dengan fitur setelan preload yang bisa disesuaikan dengan beban berkendara.",
+      "price": 95,
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsZpZLwD3RngAwILcs512AxAH1D3R4L7WZx5V9o9xhlQ&s=10",
+      "category": "Suspensi"
+    },
+    {
+      "id": 4,
+      "title": "Kaliper Rem 4 Piston",
+      "brand": "RCB",
+      "description": "Kaliper rem berbahan alumunium CNC presisi tinggi untuk daya cengkeram rem maksimal.",
+      "price": 65,
+      "thumbnail": "https://www.hondacengkareng.com/wp-content/uploads/2018/08/Caliper-Sub-Assy-L-FR-45150KZZ902-600x600.jpg",
+      "category": "Sistem Pengereman"
+    },
+    {
+      "id": 5,
+      "title": "Velg Racing Palang 5",
+      "brand": "Vrossi",
+      "description": "Velg racing alumunium alloy yang ringan dan kuat. Meningkatkan kestabilan saat manuver.",
+      "price": 110,
+      "thumbnail": "https://hsrwheel.com/wp-content/uploads/2025/08/BOROKO-TJH-HSR-R16X7-H5X1143-ET42-SANDY-BRONZE-KANAN.jpg",
+      "category": "Kaki-kaki & Roda"
+    }
+  ]
+}
